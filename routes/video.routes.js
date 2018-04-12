@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.get('/videos', notes.findAll);
 
     // Retrieve a single Note with noteId
-    app.get('/videos/:videoId', notes.findOne);
+    app.get('/video/:videoId', notes.findOne);
 
     // Update a Note with noteId
     app.put('/notes/:noteId', notes.update);
