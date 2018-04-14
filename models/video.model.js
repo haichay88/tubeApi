@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var videoSchema = mongoose.Schema({
     title: String,
+    titleConverted:String,
     description: String,
     videoId: String,
     imgUrl: String,
@@ -9,28 +10,33 @@ var videoSchema = mongoose.Schema({
     dislikeCount: String,
     likeCount: String,
     publishDated: String,
-    videoRelateds:[{
-        title:String,
-        videoId:String,
-        channelTitle:String,
-        imgUrl:String,
-        channelId:String
-    }],
+    tags:String,
+    channelTitle:String,
+    channelTitleConverted:String,
+    channelId:String,
     channelInfo: {
         channelId: String,
         title: String,
         imgUrl: String
     },
-    comments: [{
-        authorProfileImageUrl: String,
-        authorDisplayName: String,
-        textDisplay: String,
-        replies: [{
-            authorProfileImageUrl: String,
-            authorDisplayName: String,
-            textDisplay: String,
-        }]
-    }]
+    // videoRelateds:[{
+    //     title:String,
+    //     videoId:String,
+    //     channelTitle:String,
+    //     imgUrl:String,
+    //     channelId:String
+    // }],
+   
+    // comments: [{
+    //     authorProfileImageUrl: String,
+    //     authorDisplayName: String,
+    //     textDisplay: String,
+    //     replies: [{
+    //         authorProfileImageUrl: String,
+    //         authorDisplayName: String,
+    //         textDisplay: String,
+    //     }]
+    // }]
 
 
 });

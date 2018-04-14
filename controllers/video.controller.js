@@ -3,14 +3,14 @@ const Video = require('../models/video.model.js');
 
 // Create and Save a new Note
 exports.create = (req, res) => {
-console.log(req.body);
+   
     // Validate request
     if (!req.body) {
         return res.status(400).send({
             message: "Note content can not be empty"
         });
     }
-   
+
     // create a channel
     const video = new Video({
         title: req.body.video.title || "Untitled Note",
@@ -22,21 +22,69 @@ console.log(req.body);
         dislikeCount: req.body.video.dislikeCount,
         likeCount: req.body.video.likeCount,
         publishDated: req.body.video.publishDated,
-        channelInfo: req.body.video.channelInfo,
-        videoRelateds:req.body.videoRelateds,
-        comments: req.body.comments
+        //channelInfo: req.body.video.channelInfo,
+        titleConverted:req.body.video.titleConverted,
+        channelId:req.body.video.channelId,
+        channelTitle:req.body.video.channelTitle,
+        channelTitleConverted:req.body.video.channelTitleConverted,
+        tags:req.body.video.tags
     });
 
+    Video.find({ videoId: req.body.video.videoId })
+        .then(note => {
+           
+            if (note.length<=0) {
+                console.log(note);
+                // Save Note in the database
+                video.save()
+                    .then(data => {
+                        res.send(data);
+                    }).catch(err => {
+                        res.status(500).send({
+                            message: err.message || "Some error occurred while creating the Note."
+                        });
+                    });
 
-    // Save Note in the database
-    video.save()
-        .then(data => {
-            res.send(data);
+            }
+            else {
+                // // Find note and update it with the request body
+                // Note.findByIdAndUpdate({ videoId: req.params.videoId }, {
+                //     title: req.body.title || "Untitled Note",
+                //     content: req.body.content
+                // }, { new: true })
+                //     .then(note => {
+                //         if (!note) {
+                //             return res.status(404).send({
+                //                 message: "Note not found with id " + req.params.noteId
+                //             });
+                //         }
+                //         res.send(note);
+                //     }).catch(err => {
+                //         if (err.kind === 'ObjectId') {
+                //             return res.status(404).send({
+                //                 message: "Note not found with id " + req.params.noteId
+                //             });
+                //         }
+                //         return res.status(500).send({
+                //             message: "Error updating note with id " + req.params.noteId
+                //         });
+                //     });
+                res.send(note);
+            }
+            
         }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating the Note."
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Video not found with id " + req.params.videoId
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving video with id " + req.params.videoId
             });
         });
+
+
+
 };
 
 // Retrieve and return all notes from the database.
@@ -53,22 +101,22 @@ exports.findAll = (req, res) => {
 
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
-    Video.find({videoId:req.params.videoId})
+    Video.find({ videoId: req.params.videoId })
         .then(note => {
             if (!note) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.videoId
+                    message: "Video not found with id " + req.params.videoId
                 });
             }
-            res.send(note);
+            res.send(note[0]);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.videoId
+                    message: "Video not found with id " + req.params.videoId
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving note with id " + req.params.videoId
+                message: "Error retrieving video with id " + req.params.videoId
             });
         });
 };
@@ -108,22 +156,23 @@ exports.update = (req, res) => {
 
 // Delete a note with the specified noteId in the request
 exports.delete = (req, res) => {
-    Note.findByIdAndRemove(req.params.videoId)
+   
+    Video.deleteMany({ videoId: req.params.videoId })
         .then(note => {
             if (!note) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.videoId
+                    message: "Video not found with id " + req.params.videoId
                 });
             }
-            res.send({ message: "Note deleted successfully!" });
+            res.send({ message: "video deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.videoId
+                    message: "Video not found with id " + req.params.videoId
                 });
             }
             return res.status(500).send({
-                message: "Could not delete note with id " + req.params.videoId
+                message: "Could not delete video with id " + req.params.videoId
             });
         });
 };
