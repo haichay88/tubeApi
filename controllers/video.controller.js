@@ -176,3 +176,24 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+// count record of collection
+exports.count = (req, res) => {
+    
+    Video.count()
+        .then(note => {
+            console.log(note);
+            return res.status(200).send({
+                message: "Total record " + note
+            }); 
+        }).catch(err => {
+            if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+                return res.status(404).send({
+                    message: "Video not found with id " + req.params.videoId
+                });
+            }
+            return res.status(500).send({
+                message: "Could not delete video with id " + req.params.videoId
+            });
+        });
+};

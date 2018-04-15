@@ -15,4 +15,6 @@ module.exports = (app) => {
 
     // Delete a Note with noteId
     app.delete('/notes/:videoId', notes.delete);
+    // count a video record
+    app.get('/count', notes.count);
 }
