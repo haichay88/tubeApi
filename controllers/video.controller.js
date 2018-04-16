@@ -27,7 +27,9 @@ exports.create = (req, res) => {
         channelId:req.body.video.channelId,
         channelTitle:req.body.video.channelTitle,
         channelTitleConverted:req.body.video.channelTitleConverted,
-        tags:req.body.video.tags
+        tags:req.body.video.tags,
+        height:req.body.video.height,
+        width:req.body.video.width,
     });
 
     Video.find({ videoId: req.body.video.videoId })
