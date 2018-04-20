@@ -4,9 +4,7 @@ const Video = require('../models/video.model.js');
 // Create and Save a new Note
 exports.create = (req, res) => {
    
-    return res.status(400).send({
-        message: "Note content can not be empty"
-    });
+   
     // Validate request
     if (!req.body) {
         return res.status(400).send({
