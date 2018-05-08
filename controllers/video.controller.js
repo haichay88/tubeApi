@@ -41,7 +41,7 @@ exports.create = (req, res) => {
         .then(note => {
            
             if (note.length<=0) {
-                console.log(note);
+                
                 // Save Note in the database
                 video.save()
                     .then(data => {
