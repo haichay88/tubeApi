@@ -21,25 +21,9 @@ var videoSchema = mongoose.Schema({
         title: String,
         imgUrl: String
     },
-    // videoRelateds:[{
-    //     title:String,
-    //     videoId:String,
-    //     channelTitle:String,
-    //     imgUrl:String,
-    //     channelId:String
-    // }],
-   
-    // comments: [{
-    //     authorProfileImageUrl: String,
-    //     authorDisplayName: String,
-    //     textDisplay: String,
-    //     replies: [{
-    //         authorProfileImageUrl: String,
-    //         authorDisplayName: String,
-    //         textDisplay: String,
-    //     }]
-    // }]
-
+    categoryId:String,
+    createdDate:Date,
+    source:String,
 
 });
 

@@ -4,7 +4,7 @@ const Video = require('../models/video.model.js');
 // Create and Save a new Note
 exports.create = (req, res) => {
    
-   
+   console.log(req.body);
     // Validate request
     if (!req.body) {
         return res.status(400).send({
@@ -31,6 +31,9 @@ exports.create = (req, res) => {
         tags:req.body.video.tags,
         height:req.body.video.height,
         width:req.body.video.width,
+        categoryId:req.body.video.categoryId,
+        createdDate:new Date(),
+        source:req.body.video.source,
     });
 
     Video.find({ videoId: req.body.video.videoId })
